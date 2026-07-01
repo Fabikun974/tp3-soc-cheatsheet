@@ -1,0 +1,331 @@
+/* =====================================================================
+   TP03 — Portail Captif Wi-Fi "Infratech-Guest"
+   Notions clés : @media, display:none (mobile), zones tactiles 44px,
+   typographie fluide clamp().
+   ===================================================================== */
+
+/* --- Palette : identité émeraude corporate --------------------------- */
+:root {
+  --brand-900: #053b2c;
+  --brand-800: #064e3b;
+  --brand-700: #047857;
+  --brand-500: #10b981;
+  --brand-300: #6ee7b7;
+  --brand-050: #ecfdf5;
+
+  --amber:     #fbbf24;   /* touche chaude pour la puce du badge */
+  --ink:       #0f172a;   /* texte principal (sur fond clair) */
+  --muted:     #64748b;   /* texte secondaire */
+  --line:      #e2e8f0;   /* bordures */
+  --paper:     #ffffff;
+
+  --radius:    16px;
+  --touch:     44px;      /* norme d'accessibilité tactile */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { background: var(--brand-050); }
+
+body {
+  font-family: "Sora", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =====================================================================
+   MISE EN PAGE À DEUX COLONNES (Desktop par défaut)
+   ===================================================================== */
+.portal {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;   /* illustration | formulaire */
+  min-height: 100vh;
+}
+
+/* =====================================================================
+   COLONNE GAUCHE — Panneau illustration / consignes
+   ===================================================================== */
+.panel-visuel {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(120% 90% at 15% 10%, rgba(16,185,129,0.35), transparent 60%),
+    linear-gradient(150deg, var(--brand-800) 0%, var(--brand-900) 100%);
+  display: flex;
+  align-items: center;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* Texture discrète en pointillés (motif "grille technique") */
+.panel-visuel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.5;
+}
+
+.panel-visuel__inner {
+  position: relative;   /* passe au-dessus de la texture */
+  max-width: 460px;
+}
+
+/* Logo / marque */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2.5rem;
+}
+.brand__mark {
+  color: var(--brand-300);
+  font-size: 1.6rem;
+}
+.brand__name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
+/* --- Badge d'accès stylisé (signature visuelle du panneau) ---------- */
+.badge {
+  width: 190px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 20px 40px -18px rgba(0,0,0,0.6);
+  transform: rotate(-3deg);
+}
+.badge__photo {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand-300), var(--brand-500));
+  margin-bottom: 14px;
+}
+.badge__lines { display: flex; flex-direction: column; gap: 7px; }
+.badge__line {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.35);
+  width: 100%;
+}
+.badge__line--lg { width: 80%; background: rgba(255,255,255,0.6); }
+.badge__line--sm { width: 45%; }
+.badge__chip {
+  width: 30px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--amber);
+  margin-top: 16px;
+}
+
+/* --- Titre + consignes : TYPOGRAPHIE FLUIDE clamp() ----------------- */
+.consignes__titre {
+  /* min 1.4rem, idéal ~ largeur écran, max 2rem */
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2rem);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+.consignes__intro {
+  color: var(--brand-300);
+  margin-bottom: 1.5rem;
+  font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.05rem);
+}
+.consignes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.consignes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  /* Consignes de sécurité également fluidifiées avec clamp() */
+  font-size: clamp(0.95rem, 0.9rem + 0.35vw, 1.08rem);
+}
+.check {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--brand-500);
+  color: var(--brand-900);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+}
+
+/* =====================================================================
+   COLONNE DROITE — Formulaire d'authentification
+   ===================================================================== */
+.panel-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--paper);
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.form-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.wifi-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand-050);
+  color: var(--brand-700);
+  border: 1px solid var(--brand-300);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  margin-bottom: 1.5rem;
+}
+.wifi-status__icon { font-size: 1.1rem; }
+
+/* Titre du portail : TYPOGRAPHIE FLUIDE clamp() */
+.form-titre {
+  font-size: clamp(1.6rem, 1.2rem + 2.2vw, 2.4rem);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.form-sous-titre {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+/* --- Champs de saisie ----------------------------------------------- */
+.auth-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+  min-height: var(--touch);   /* >= 44px : cible tactile confortable */
+  padding: 0 16px;
+  font-size: 1rem;            /* 16px : empêche le zoom auto iOS Safari */
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.18);
+}
+
+/* Case à cocher : acceptation de la charte */
+.charte {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.charte input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--brand-600, var(--brand-700));
+  flex: none;
+}
+.charte a { color: var(--brand-700); font-weight: 600; }
+
+/* Bouton de connexion : cible tactile >= 44px */
+.btn-connexion {
+  min-height: var(--touch);
+  margin-top: 0.4rem;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+.btn-connexion:hover {
+  box-shadow: 0 12px 24px -8px rgba(4,120,87,0.6);
+  transform: translateY(-1px);
+}
+.btn-connexion:active { transform: translateY(0); }
+
+.aide {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 1.2rem;
+}
+
+.portal-footer {
+  margin-top: 2rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 400px;
+}
+
+/* =====================================================================
+   DIRECTIVES CONDITIONNELLES — MEDIA QUERIES
+   ===================================================================== */
+
+/* TABLETTE & SMARTPHONE ( <= 768px )
+   L'illustration est TOTALEMENT MASQUÉE pour préserver la bande passante.
+   Seul le formulaire reste affiché, en pleine largeur.                  */
+@media (max-width: 768px) {
+  .portal {
+    grid-template-columns: 1fr;   /* une seule colonne */
+  }
+
+  .panel-visuel {
+    display: none;                /* <-- masquage sélectif */
+  }
+
+  .panel-form {
+    min-height: 100vh;
+    justify-content: flex-start;
+    padding-top: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  /* Renfort ergonomie tactile : on garantit >= 44px et 16px sur mobile */
+  .auth-form input[type="text"],
+  .auth-form input[type="password"],
+  .btn-connexion {
+    min-height: 48px;
+    font-size: 16px;             /* verrouille le 16px anti-zoom iOS */
+  }
+}
+
+/* PETIT SMARTPHONE ( <= 380px ) : on resserre un peu les marges */
+@media (max-width: 380px) {
+  .panel-form { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+/* Accessibilité : respect de "réduire les animations" */
+@media (prefers-reduced-motion: reduce) {
+  .btn-connexion { transition: none; }
+}

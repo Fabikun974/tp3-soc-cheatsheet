@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <!-- Indispensable pour que les Media Queries se déclenchent correctement -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infratech-Guest — Portail d'accès Wi-Fi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="portal">
+
+    <!-- ================================================================
+         COLONNE GAUCHE : illustration corporate + consignes de sécurité
+         => MASQUÉE en mobile via display:none (voir styles.css)
+         ================================================================ -->
+    <aside class="panel-visuel">
+      <div class="panel-visuel__inner">
+
+        <div class="brand">
+          <span class="brand__mark" aria-hidden="true">◈</span>
+          <span class="brand__name">Infratech</span>
+        </div>
+
+        <!-- Badge d'accès stylisé (rappel : sécurité physique du Data Center) -->
+        <div class="badge" aria-hidden="true">
+          <div class="badge__photo"></div>
+          <div class="badge__lines">
+            <span class="badge__line badge__line--lg"></span>
+            <span class="badge__line"></span>
+            <span class="badge__line badge__line--sm"></span>
+          </div>
+          <div class="badge__chip"></div>
+        </div>
+
+        <!-- Titre + consignes : tailles gérées avec clamp() -->
+        <h2 class="consignes__titre">Sécurité physique du Data Center</h2>
+        <p class="consignes__intro">
+          L'accès aux salles serveurs est strictement contrôlé.
+          Merci de respecter la charte de sécurité du site.
+        </p>
+
+        <ul class="consignes">
+          <li><span class="check">✓</span> Port du badge nominatif obligatoire et visible</li>
+          <li><span class="check">✓</span> Un badge = une personne : aucun « tailgating »</li>
+          <li><span class="check">✓</span> Zones sensibles interdites sans escorte habilitée</li>
+          <li><span class="check">✓</span> Signalez tout visiteur non accompagné à l'accueil</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ================================================================
+         COLONNE DROITE : formulaire d'authentification
+         => SEUL élément conservé en mobile
+         ================================================================ -->
+    <main class="panel-form">
+      <div class="form-card">
+
+        <div class="wifi-status">
+          <span class="wifi-status__icon" aria-hidden="true">⌁</span>
+          <span>Réseau <strong>Infratech-Guest</strong> · Authentification requise</span>
+        </div>
+
+        <!-- Titre du portail : taille fluide via clamp() -->
+        <h1 class="form-titre">Connexion au Wi-Fi invités</h1>
+        <p class="form-sous-titre">
+          Identifiez-vous et acceptez la charte pour accéder à Internet.
+        </p>
+
+        <form class="auth-form" action="#" method="post">
+
+          <div class="field">
+            <label for="login">Identifiant ou code temporaire</label>
+            <input
+              type="text"
+              id="login"
+              name="login"
+              autocomplete="username"
+              inputmode="text"
+              placeholder="ex : invite-042"
+              required>
+          </div>
+
+          <div class="field">
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required>
+          </div>
+
+          <!-- Acceptation de la charte informatique -->
+          <label class="charte">
+            <input type="checkbox" name="charte" required>
+            <span>J'ai lu et j'accepte la <a href="#">charte informatique</a> de l'entreprise.</span>
+          </label>
+
+          <button type="submit" class="btn-connexion">Accéder à Internet</button>
+        </form>
+
+        <p class="aide">
+          Pas de code d'accès ? Rapprochez-vous de l'accueil pour obtenir un
+          identifiant temporaire valable 24 h.
+        </p>
+      </div>
+
+      <footer class="portal-footer">
+        Infratech · Réseau invités isolé · Vos communications ne sont pas surveillées à titre personnel
+      </footer>
+    </main>
+
+  </div>
+</body>
+</html>
